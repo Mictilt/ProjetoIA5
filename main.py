@@ -15,7 +15,6 @@ zombieBController = board.secondZombie
 pecaAController = board.pecaA
 pecaBController = board.pecaB
 municaoController = board.municao
-nturno = 0
 arrayComOsLugares=[]
 arrayComTodasAsPosicoes=[(0,0),(0,1),(0,2),(0,3),(0,4),(0,5),
 (1,0),(1,1),(1,2),(1,3),(1,4),(1,5),
@@ -32,98 +31,102 @@ robotController.inverterPolaridade()
 
 def sigarCaminho(nturno,robotX, robotY, destinyX, destinyY):
     while(robotY < destinyY):
-        if(board.aoLado2Frente() == False):
-            robotController.andarFrente()
         board.detetouAlgo3()
         if(board.aoLado() == True):
             if(robotController.getBalas() > 0):
                 board.efetuarPistola()
             else:
                 board.efetuarAtaque()
+        if(board.aoLado2Frente() == False):
+            robotController.andarFrente()
         nturno += 1
         board.atualizarTurno(nturno)
         robotY = robotY + 1
         print(str(robotY))
         if(robotY == destinyY and robotX == destinyX and board.aoLado2Atras() == False):
-          robotController.andarAtras()
-          board.detetouAlgo3()
-          if(board.aoLado() == True):
-            if(robotController.getBalas() > 0):
-                board.efetuarPistola()
-            else:
-                board.efetuarAtaque()
-          nturno += 1
-          board.atualizarTurno(nturno)
+            if(robotController.getX() < 5 and robotController.getY() < 5):
+                board.detetouAlgo3()
+                if(board.aoLado() == True):
+                    if(robotController.getBalas() > 0):
+                        board.efetuarPistola()
+                    else:
+                        board.efetuarAtaque()
+                    robotController.andarAtras()
+                nturno += 1
+                board.atualizarTurno(nturno)
     while(robotX < destinyX):
-        if(board.aoLado2Esquerda() == False):
-            robotController.andarEsquerda()
         board.detetouAlgo3()
         if(board.aoLado() == True):
             if(robotController.getBalas() > 0):
                 board.efetuarPistola()
             else:
                 board.efetuarAtaque()
+        if(board.aoLado2Esquerda() == False):
+            robotController.andarEsquerda()
         nturno += 1
         board.atualizarTurno(nturno)
         robotX = robotX + 1
         print(str(robotX))
-        if(robotY == destinyY and robotX == destinyX and board.aoLado2Direita() == False):
-          robotController.andarDireita()
-          board.detetouAlgo3()
-          if(board.aoLado() == True):
-            if(robotController.getBalas() > 0):
-                board.efetuarPistola()
-            else:
-                board.efetuarAtaque()
-          nturno += 1
-          board.atualizarTurno(nturno)
+        if(robotY == destinyY and robotX == destinyX and board.aoLado2Atras() == False):
+            if(robotController.getX() < 5 and robotController.getY() < 5):
+                board.detetouAlgo3()
+                if(board.aoLado() == True):
+                    if(robotController.getBalas() > 0):
+                        board.efetuarPistola()
+                    else:
+                        board.efetuarAtaque()
+                    robotController.andarDireita()
+                nturno += 1
+                board.atualizarTurno(nturno)
     while (robotX > destinyX):
-        if(board.aoLado2Direita() == False):
-            robotController.andarDireita()
-        if(board.aoLado() == True):
-            board.detetouAlgo3()
-            if(robotController.getBalas() > 0):
-                board.efetuarPistola()
-            else:
-                board.efetuarAtaque()
-        nturno += 1
-        board.atualizarTurno(nturno)
-        robotX = robotX - 1
-        print(str(robotX))
-        if(robotY == destinyY and robotX == destinyX and board.aoLado2Esquerda() == False):
-          robotController.andarEsquerda()
-          board.detetouAlgo3()
-          if(board.aoLado() == True):
-            board.detetouAlgo3()
-            if(robotController.getBalas() > 0):
-                board.efetuarPistola()
-            else:
-                board.efetuarAtaque() 
-          nturno += 1
-          board.atualizarTurno(nturno)
-    while(robotY > destinyY):
-        if(board.aoLado2Atras() == False):
-            robotController.andarAtras()
         board.detetouAlgo3()
         if(board.aoLado() == True):
             if(robotController.getBalas() > 0):
                 board.efetuarPistola()
             else:
                 board.efetuarAtaque()
+        if(board.aoLado2Direita() == False):
+            robotController.andarDireita()
         nturno += 1
         board.atualizarTurno(nturno)
-        robotY = robotY - 1
-        print(str(robotY))
-        if(robotY == destinyY and robotX == destinyX and board.aoLado2Frente() == False):
-          robotController.andarFrente()
-          board.detetouAlgo3()
-          if(board.aoLado() == True):
+        robotX = robotX - 1
+        print(str(robotX))
+        if(robotY == destinyY and robotX == destinyX and board.aoLado2Atras() == False):
+            if(robotController.getX() < 5 and robotController.getY() < 5):
+                board.detetouAlgo3()
+                if(board.aoLado() == True):
+                    board.detetouAlgo3()
+                    if(robotController.getBalas() > 0):
+                        board.efetuarPistola()
+                    else:
+                        board.efetuarAtaque()
+                    robotController.andarEsquerda() 
+                nturno += 1
+                board.atualizarTurno(nturno)
+    while(robotY > destinyY):
+        board.detetouAlgo3()
+        if(board.aoLado() == True):
             if(robotController.getBalas() > 0):
                 board.efetuarPistola()
             else:
                 board.efetuarAtaque()
-          nturno += 1
-          board.atualizarTurno(nturno)
+        if(board.aoLado2Atras() == False):
+            robotController.andarAtras()
+        nturno += 1
+        board.atualizarTurno(nturno)
+        robotY = robotY - 1
+        print(str(robotY))
+        if(robotY == destinyY and robotX == destinyX and board.aoLado2Atras() == False):
+            if(robotController.getX() < 5 and robotController.getY() < 5):
+                board.detetouAlgo3()
+                if(board.aoLado() == True):
+                    if(robotController.getBalas() > 0):
+                        board.efetuarPistola()
+                    else:
+                        board.efetuarAtaque()
+                    robotController.andarFrente()
+                nturno += 1
+                board.atualizarTurno(nturno)
 
 
 def menuPrincipal():
@@ -301,9 +304,11 @@ def Menuturno():
 
 def JogarInteligente():
     #Primeira Jogada
+    global nturno
     optJogar= True
     finalPercurso = False
     robotController.andarEsquerda()
+    nturno = 0
     nturno += 1
     board.atualizarTurno(nturno)
     #fim primeira jogada
@@ -317,6 +322,7 @@ def JogarInteligente():
         if(board.detetarPerder()):
             print("--------------PERDEU-----------------------")
             optJogar = False
+
         #verificação que chegou ao fim do percurso
         if((robotController.getX() == 5 and robotController.getY() == 4 and robotController.getPecas() == 0) or (robotController.getX() == 5 and robotController.getY() == 5 and robotController.getPecas() == 0)):
             finalPercurso = True
@@ -326,9 +332,8 @@ def JogarInteligente():
             finalPercurso = False
             print(str(finalPercurso))
         #Verificação que tem uma peça para entregar
-        while(robotController.getPecas() > 0):
+        while(board.temPeca == True and board.ganhar == False):
             print("a entregar")
-            board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
                     if(robotController.getBalas() > 0):
@@ -341,6 +346,13 @@ def JogarInteligente():
                         board.efetuarPistola()
                     else:
                         board.efetuarAtaque()
+            if(board.municao != None):
+                    sigarCaminho(nturno,
+                    robotX=robotController.getX(),
+                    robotY=robotController.getY(),
+                    destinyX=board.municao.getX(),
+                    destinyY=board.municao.getY()
+                    )
             sigarCaminho(nturno,
                 robotX=robotController.getX(),
                 robotY=robotController.getY(),
@@ -350,7 +362,7 @@ def JogarInteligente():
         #fim da verificação da peça
         
         #percurso 1 (inicial) para o fim
-        while(robotController.getX()==1 and robotController.getY()<5 and finalPercurso == False):
+        while(robotController.getX()==1 and robotController.getY()<5 and finalPercurso == False and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):    
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -359,7 +371,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -368,7 +379,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -376,7 +386,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -395,7 +404,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #percurso 2 (final) para o início
-        while(robotController.getX()==1 and robotController.getY() > 0 and finalPercurso == True):
+        while(robotController.getX()==1 and robotController.getY() > 0 and finalPercurso == True and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):    
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -404,7 +413,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -413,7 +421,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -421,7 +428,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -440,7 +446,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #percurso 1 (inicial) para o fim
-        while(robotController.getX()==3 and robotController.getY() > 0 and finalPercurso == False):
+        while(robotController.getX()==3 and robotController.getY() > 0 and finalPercurso == False and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -449,7 +455,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -458,7 +463,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -466,7 +470,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -485,7 +488,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #percurso 2 (final) para o início
-        while(robotController.getX()==3 and robotController.getY() < 5 and finalPercurso == True):
+        while(robotController.getX()==3 and robotController.getY() < 5 and finalPercurso == True and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -494,7 +497,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -503,7 +505,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -511,7 +512,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -530,7 +530,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #percurso 1 (inicial) para o fim
-        while(robotController.getX()==5 and robotController.getY() < 4 and finalPercurso == False):    
+        while(robotController.getX()==5 and robotController.getY() < 4 and finalPercurso == False and board.temPeca == False and board.ganhar == False):    
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -539,7 +539,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -548,7 +547,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -556,7 +554,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -575,7 +572,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #percurso 2 (final) para o início
-        while(robotController.getX()==5 and robotController.getY() > 0 and finalPercurso == True):    
+        while(robotController.getX()==5 and robotController.getY() > 0 and finalPercurso == True and board.temPeca == False and board.ganhar == False):    
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -584,7 +581,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY()
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -593,7 +589,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -601,7 +596,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -621,7 +615,7 @@ def JogarInteligente():
             board.atualizarTurno(nturno)
         #ação inicial, tem um if para verificar se chegou ao fim ou não
         #se não chegou ao fim
-        if((finalPercurso == False and robotController.getY() == 0) or (finalPercurso == False and robotController.getY() == 5)):
+        if((finalPercurso == False and robotController.getY() == 0) or (finalPercurso == False and robotController.getY() == 5) and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -630,7 +624,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY(),
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -639,7 +632,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -647,7 +639,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
@@ -666,7 +657,7 @@ def JogarInteligente():
             nturno += 1
             board.atualizarTurno(nturno)
         #se vem do fim
-        elif((finalPercurso == True and robotController.getY() == 0 and robotController.getX() > 1) or (finalPercurso == True and robotController.getY() == 5 and robotController.getX() > 1)):
+        elif((finalPercurso == True and robotController.getY() == 0 and robotController.getX() > 1) or (finalPercurso == True and robotController.getY() == 5 and robotController.getX() > 1) and board.temPeca == False and board.ganhar == False):
             if(hasattr(board, "municao")):
                 if(board.municao != None):
                     sigarCaminho(nturno,
@@ -675,7 +666,6 @@ def JogarInteligente():
                     destinyX=board.municao.getX(),
                     destinyY=board.municao.getY(),
                     )
-                    board.atualizarTurno(nturno)
                     print("Municao: "+ str(robotController.getBalas()))
             if(board.pecaA != None):
                 sigarCaminho(nturno,
@@ -684,7 +674,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                board.atualizarTurno(nturno)
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -692,7 +681,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                board.atualizarTurno(nturno)
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLado() == True):
