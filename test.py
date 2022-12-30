@@ -40,6 +40,8 @@ class Board:
         self.municao =  None
         self.matouFirst = False
         self.matouSecond = False
+        self.temPeca = False
+        self.ganhar = False
 
         self.board= [
         [0,0,0,0,0,0],
@@ -159,6 +161,7 @@ class Board:
                 self.mota.setPecas(newValue) # irá adicionar um peca a mota
                 print("Mota:" + str(self.mota.getPecas()))
                 newValueRobot = self.robot.getPecas() - 1
+                self.temPeca = False
                 self.robot.setPecas(newValueRobot) # irá remover a peca que estava no robo
 
 
@@ -189,6 +192,7 @@ class Board:
                         pecasAtuais += 1
                         self.robot.setPecas(pecasAtuais)
                         self.robot.apanharOBjeto()
+                        self.temPeca = True
                         self.pecaA = None
             if(hasattr(self, "pecaA")):
                 if (self.pecaA != None):
@@ -216,6 +220,7 @@ class Board:
                         pecasAtuais += 1
                         self.robot.setPecas(pecasAtuais)
                         self.robot.apanharOBjeto()
+                        self.temPeca = True
                         self.pecaB = None
             #-------------------------------------------------------------
             if (hasattr(self, "pecaB")):
@@ -235,7 +240,8 @@ class Board:
 
     def detetarGanhar(self):
         if(self.mota.getPecas() == 2):
-            spkr.speak('Isso win, ate parece facil')
+            self.ganhar = True
+            spkr.play_file('win.wav')
             
 
     def detetarPerder(self):
@@ -276,7 +282,7 @@ class Board:
     def aoLado2Direita(self):
         if (hasattr(self, "firstZombie")):
             if(self.firstZombie != None):
-                if((self.robot.getX() - 2) == self.firstZombie.getX()):
+                if(((self.robot.getX() - 2) == self.firstZombie.getX()) or ((self.robot.getX() - 1) == self.firstZombie.getX() and (self.robot.getY() - 1) == self.firstZombie.getY()) or ((self.robot.getX() - 1) == self.firstZombie.getX() and (self.robot.getY() + 1) == self.firstZombie.getY())):
                     return True
                 else:
                     return False
@@ -284,7 +290,7 @@ class Board:
                 return False
         if (hasattr(self, "secondZombie")):
             if(self.secondZombie != None):
-                if((self.robot.getX() - 2) == self.secondZombie.getX()):
+                if(((self.robot.getX() - 2) == self.secondZombie.getX()) or ((self.robot.getX() - 1) == self.secondZombie.getX() and (self.robot.getY() - 1) == self.secondZombie.getY()) or ((self.robot.getX() - 1) == self.secondZombie.getX() and (self.robot.getY() + 1) == self.secondZombie.getY())):
                     return True
                 else:
                     return False
@@ -294,13 +300,13 @@ class Board:
     def aoLado2Esquerda(self):
         if (hasattr(self, "firstZombie")):
             if(self.firstZombie != None):
-                if((self.robot.getX() + 2) == self.firstZombie.getX()):
+                if(((self.robot.getX() + 2) == self.firstZombie.getX()) or ((self.robot.getX() + 1) == self.firstZombie.getX() and (self.robot.getY() - 1) == self.firstZombie.getY()) or ((self.robot.getX() + 1) == self.firstZombie.getX() and (self.robot.getY() + 1) == self.firstZombie.getY())):
                     return True
                 else:
                     return False
         if (hasattr(self, "secondZombie")):
             if(self.secondZombie != None):
-                if((self.robot.getX() + 2) == self.secondZombie.getX()):
+                if(((self.robot.getX() + 2) == self.secondZombie.getX()) or ((self.robot.getX() + 1) == self.secondZombie.getX() and (self.robot.getY() - 1) == self.secondZombie.getY()) or ((self.robot.getX() + 1) == self.secondZombie.getX() and (self.robot.getY() + 1) == self.secondZombie.getY())):
                     return True
                 else:
                     return False
@@ -312,7 +318,11 @@ class Board:
             print("print 1")
             if(self.firstZombie != None):
                 print("print 2")
-                if((self.robot.getY() + 2) == self.firstZombie.getY()):
+                print(str(self.firstZombie.getY()))
+                print(str(self.firstZombie.getX()))
+                print(str(self.robot.getX()))
+                print(str(self.robot.getY()))
+                if(((self.robot.getY() + 2) == self.firstZombie.getY()) or ((self.robot.getX() + 1) == self.firstZombie.getX() and (self.robot.getY() + 1) == self.firstZombie.getY()) or ((self.robot.getX() - 1) == self.firstZombie.getX() and (self.robot.getY() + 1) == self.firstZombie.getY())):
                     print("print 3")
                     return True
                 else:
@@ -322,9 +332,11 @@ class Board:
                 return False
         if (hasattr(self, "secondZombie")):
             if(self.secondZombie != None):
-                if((self.robot.getY() + 2) == self.secondZombie.getY()):
+                if(((self.robot.getY() + 2) == self.secondZombie.getY()) or ((self.robot.getX() + 1) == self.secondZombie.getX() and (self.robot.getY() + 1) == self.secondZombie.getY()) or ((self.robot.getX() - 1) == self.secondZombie.getX() and (self.robot.getY() + 1) == self.secondZombie.getY())):
+                    print("print 5")
                     return True
                 else:
+                    print("print 6")
                     return False
             else:
                 return False
@@ -332,7 +344,7 @@ class Board:
     def aoLado2Atras(self):
         if (hasattr(self, "firstZombie")):
             if(self.firstZombie != None):
-                if((self.robot.getY() - 2) == self.firstZombie.getY()):
+                if(((self.robot.getY() - 2) == self.firstZombie.getY()) or ((self.robot.getX() + 1) == self.firstZombie.getX() and (self.robot.getY() - 1) == self.firstZombie.getY()) or ((self.robot.getX() - 1) == self.firstZombie.getX() and (self.robot.getY() - 1) == self.firstZombie.getY())):
                     return True
                 else:
                     return False
@@ -340,7 +352,7 @@ class Board:
                 return False
         if (hasattr(self, "secondZombie")):
             if(self.secondZombie != None):
-                if((self.robot.getY() - 2) == self.secondZombie.getY()):
+                if(((self.robot.getY() - 2) == self.secondZombie.getY()) or ((self.robot.getX() + 1) == self.secondZombie.getX() and (self.robot.getY() - 1) == self.secondZombie.getY()) or ((self.robot.getX() - 1) == self.secondZombie.getX() and (self.robot.getY() - 1) == self.secondZombie.getY())):
                     return True
                 else:
                     return False
@@ -393,7 +405,22 @@ class Board:
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                if(distanciaAlgo > 5 and distanciaAlgo < 35):
+                if(distanciaAlgo > 0 and distanciaAlgo < 10):
+                    print("detetou")
+                    encontrouAlgoX = self.robot.getX() - 1
+                    encontrouAlgoY = self.robot.getY() + 1 
+                    if (self.firstZombie == None and self.matouFirst == False):
+                        if (hasattr(self, "firstZombie")):
+                            self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
+                            spkr.speak("Achei Zombie diagonal")
+                            self.firstZombie.setVisible(2)
+                    elif (self.secondZombie == None and self.matouSecond == False):
+                            if(hasattr(self, "secondZombie")):
+                                self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
+                                spkr.speak("Achei Zombie diagonal")
+                                self.secondZombie.setVisible(2)
+                    time.sleep(2)
+                if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
                     encontrouAlgoX = self.robot.getX() 
                     encontrouAlgoY = self.robot.getY() + 1 
@@ -408,7 +435,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 2
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -423,7 +450,7 @@ class Board:
                     spkr.speak("2 houses")
                     encontrouAlgoX = self.robot.getX()
                     encontrouAlgoY = self.robot.getY() + 2 
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -434,7 +461,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 1
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -479,11 +506,26 @@ class Board:
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                if(distanciaAlgo > 5 and distanciaAlgo < 35):
+                if(distanciaAlgo > 0 and distanciaAlgo < 10):
+                    print("detetou")
+                    encontrouAlgoX = self.robot.getX() - 1
+                    encontrouAlgoY = self.robot.getY() - 1 
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
+                        if (hasattr(self, "firstZombie")):
+                            self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
+                            spkr.speak("Achei Zombie")
+                            self.firstZombie.setVisible(2)
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
+                        if(hasattr(self, "secondZombie")):
+                            self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
+                            spkr.speak("Achei Zombie")
+                            self.secondZombie.setVisible(2)
+                    time.sleep(2)
+                if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
                     encontrouAlgoX = self.robot.getX() -1
                     encontrouAlgoY = self.robot.getY() 
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -494,7 +536,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 2
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -510,7 +552,7 @@ class Board:
                     spkr.speak("2 houses")
                     encontrouAlgoX = self.robot.getX() -2
                     encontrouAlgoY = self.robot.getY()  
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -521,7 +563,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 1
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -566,11 +608,26 @@ class Board:
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                if(distanciaAlgo > 5 and distanciaAlgo < 35):
+                if(distanciaAlgo > 0 and distanciaAlgo < 10):
+                    print("detetou")
+                    encontrouAlgoX = self.robot.getX() + 1
+                    encontrouAlgoY = self.robot.getY() + 1 
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
+                        if (hasattr(self, "firstZombie")):
+                            self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
+                            spkr.speak("Achei Zombie")
+                            self.firstZombie.setVisible(2)
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
+                        if(hasattr(self, "secondZombie")):
+                            self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
+                            spkr.speak("Achei Zombie")
+                            self.secondZombie.setVisible(2)
+                    time.sleep(2)
+                if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
                     encontrouAlgoX = self.robot.getX() + 1
                     encontrouAlgoY = self.robot.getY() 
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -581,7 +638,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 2
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -598,7 +655,7 @@ class Board:
                     spkr.speak("2 houses")
                     encontrouAlgoX = self.robot.getX() + 2
                     encontrouAlgoY = self.robot.getY()  
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -609,7 +666,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 1
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -654,11 +711,26 @@ class Board:
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                if(distanciaAlgo > 5 and distanciaAlgo < 35):
+                if(distanciaAlgo > 0 and distanciaAlgo < 10):
+                    print("detetou")
+                    encontrouAlgoX = self.robot.getX() + 1
+                    encontrouAlgoY = self.robot.getY() - 1 
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
+                        if (hasattr(self, "firstZombie")):
+                            self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
+                            spkr.speak("Achei Zombie")
+                            self.firstZombie.setVisible(2)
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
+                        if(hasattr(self, "secondZombie")):
+                            self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
+                            spkr.speak("Achei Zombie")
+                            self.secondZombie.setVisible(2)
+                    time.sleep(2)
+                if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
                     encontrouAlgoX = self.robot.getX()
                     encontrouAlgoY = self.robot.getY() -1 
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -669,7 +741,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 2
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -685,7 +757,7 @@ class Board:
                     spkr.speak("2 houses")
                     encontrouAlgoX = self.robot.getX()
                     encontrouAlgoY = self.robot.getY() -2 
-                    if (self.firstZombie == None and self.matouFirst == False):
+                    if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if(self.secondZombie != None):
                             if(self.secondZombie.getX() == encontrouAlgoX and self.secondZombie.getY() == encontrouAlgoY and self.secondZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -696,7 +768,7 @@ class Board:
                             visible = self.firstZombie.getVisible() + 1
                             self.firstZombie.setVisible(visible)
                         flagDoMestre = False
-                    elif (self.secondZombie == None and self.matouSecond == False):
+                    elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
                             if(self.firstZombie.getX() == encontrouAlgoX and self.firstZombie.getY() == encontrouAlgoY and self.firstZombie.getStunned() > 0):
                                 print("zombie na mesma casa")
@@ -891,7 +963,7 @@ class Board:
                     newPecas = self.robot.getPecas() + 1
                     self.robot.setPecas(newPecas)
                 self.matouFirst = True
-                del self.firstZombie
+                self.firstZombie = None
                 self.robot.setBalas(0)
 
         elif ((self.robot.getX() - 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
@@ -904,7 +976,7 @@ class Board:
                     newPecas = self.robot.getPecas() + 1
                     self.robot.setPecas(newPecas)
                 self.matouSecond = True
-                del self.secondZombie
+                self.secondZombie = None
                 self.robot.setBalas(0)
 
 
