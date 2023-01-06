@@ -112,7 +112,7 @@ class Board:
         
             if (hasattr(self, "firstZombie")):
                 if (self.firstZombie != None):
-                    if(self.firstZombie.getVisible() < 2 or self.firstZombie.getStunned() > 0):
+                    if(self.firstZombie.getStunned() < 2 or self.firstZombie.getStunned() > 0):
                         self.board[self.firstZombie.getX()][self.firstZombie.getY()] = self.firstZombie
                         if(self.firstZombie.getStunned() > 0):
                             newValue = self.firstZombie.getStunned() - 1
@@ -243,7 +243,8 @@ class Board:
     def detetarGanhar(self):
         if(self.mota.getPecas() == 2):
             self.ganhar = True
-            spkr.play_file('win.wav')
+            spkr.speak('isso win ate parece facil')
+            #spkr.play_file('win.wav')
             return True
             
 
@@ -419,11 +420,11 @@ class Board:
                     sleep_time=0.02
                 )
                 anguloGyto = gyro.angle
+                time.sleep(2)
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                time.sleep(2)
-                if(distanciaAlgo > 0 and distanciaAlgo < 10):
+                if(distanciaAlgo >= 0 and distanciaAlgo < 10):
                     print("detetou diag")
                     encontrouAlgoX = self.robot.getX() - 1
                     encontrouAlgoY = self.robot.getY() + 1 
@@ -431,12 +432,12 @@ class Board:
                         if (hasattr(self, "firstZombie")):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie diagonal")
-                            self.firstZombie.setVisible(2)
+                            self.firstZombie.setVisible(1)
                     elif (self.secondZombie == None and self.matouSecond == False):
                             if(hasattr(self, "secondZombie")):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie diagonal")
-                                self.secondZombie.setVisible(2)
+                                self.secondZombie.setVisible(1)
                     time.sleep(2)
                 if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
@@ -450,8 +451,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 2
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(2)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -461,8 +461,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 2
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(2)
                         flagDoMestre = False
                 if(distanciaAlgo > 40 and distanciaAlgo < 65 and self.robot.getY() < 4):
                     spkr.speak("2 houses")
@@ -476,8 +475,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 1
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(1)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -487,8 +485,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 1
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(1)
                         flagDoMestre = False
                     
                 if(self.robot.robotColorDetected()=="Red"):
@@ -521,24 +518,24 @@ class Board:
                 sleep_time=0.02
                 )
                 anguloGyto = gyro.angle
+                time.sleep(2)
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                time.sleep(2)
-                if(distanciaAlgo > 0 and distanciaAlgo < 10):
-                    print("detetou")
+                if(distanciaAlgo >=0 and distanciaAlgo < 10):
+                    print("detetou diag")
                     encontrouAlgoX = self.robot.getX() - 1
                     encontrouAlgoY = self.robot.getY() - 1 
                     if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if (hasattr(self, "firstZombie")):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
-                            spkr.speak("Achei Zombie")
-                            self.firstZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.firstZombie.setVisible(1)
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(hasattr(self, "secondZombie")):
                             self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
-                            spkr.speak("Achei Zombie")
-                            self.secondZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.secondZombie.setVisible(1)
                     time.sleep(2)
                 if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
@@ -552,8 +549,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 2
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(2)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -563,8 +559,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.firstZombie.getVisible() + 2
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(2)
                         flagDoMestre = False
                 if(distanciaAlgo > 40 and distanciaAlgo < 65 and self.robot.getX() > 1):
                     print("detetou 2")
@@ -579,8 +574,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 1
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(1)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -590,8 +584,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 1
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(1)
                         flagDoMestre = False
 
                 if(self.robot.robotColorDetected()=="Red"):
@@ -624,24 +617,24 @@ class Board:
                     sleep_time=0.02
                 )
                 anguloGyto = gyro.angle
+                time.sleep(2)
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                time.sleep(2)
-                if(distanciaAlgo > 0 and distanciaAlgo < 10):
-                    print("detetou")
+                if(distanciaAlgo >= 0 and distanciaAlgo < 10):
+                    print("detetou diag")
                     encontrouAlgoX = self.robot.getX() + 1
                     encontrouAlgoY = self.robot.getY() + 1 
                     if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if (hasattr(self, "firstZombie")):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
-                            spkr.speak("Achei Zombie")
-                            self.firstZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.firstZombie.setVisible(1)
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(hasattr(self, "secondZombie")):
                             self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
-                            spkr.speak("Achei Zombie")
-                            self.secondZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.secondZombie.setVisible(1)
                     time.sleep(2)
                 if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
@@ -655,8 +648,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 2
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(2)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -666,8 +658,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 2
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(2)
                         flagDoMestre = False
 
                 if(distanciaAlgo > 40 and distanciaAlgo < 65 and self.robot.getX() < 4):
@@ -683,8 +674,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 1
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(1)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -694,8 +684,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 1
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(1)
                         flagDoMestre = False
                     
                 if(self.robot.robotColorDetected()=="Red"):
@@ -728,24 +717,24 @@ class Board:
                     sleep_time=0.02
                 )
                 anguloGyto = gyro.angle
+                time.sleep(2)
                 distanciaAlgo = self.robot.obterDistancia()
                 print(anguloGyto)
                 print(distanciaAlgo)
-                time.sleep(2)
-                if(distanciaAlgo > 0 and distanciaAlgo < 10):
-                    print("detetou")
+                if(distanciaAlgo >= 0 and distanciaAlgo < 10):
+                    print("detetou diag")
                     encontrouAlgoX = self.robot.getX() + 1
                     encontrouAlgoY = self.robot.getY() - 1 
                     if (self.firstZombie == None and self.matouFirst == False and hasattr(self, "firstZombie")):
                         if (hasattr(self, "firstZombie")):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
-                            spkr.speak("Achei Zombie")
-                            self.firstZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.firstZombie.setVisible(1)
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(hasattr(self, "secondZombie")):
                             self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
-                            spkr.speak("Achei Zombie")
-                            self.secondZombie.setVisible(2)
+                            spkr.speak("Achei Zombie diagonal")
+                            self.secondZombie.setVisible(1)
                     time.sleep(2)
                 if(distanciaAlgo > 10 and distanciaAlgo < 35):
                     print("detetou")
@@ -759,8 +748,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 2
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(2)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -770,8 +758,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 2
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(2)
                         flagDoMestre = False
                 if(distanciaAlgo > 40 and distanciaAlgo < 65 and self.robot.getY() > 1):
                     print("detetou 2")
@@ -786,8 +773,7 @@ class Board:
                         if (hasattr(self, "firstZombie") and flagDoMestre == False):
                             self.firstZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "A")
                             spkr.speak("Achei Zombie")
-                            visible = self.firstZombie.getVisible() + 1
-                            self.firstZombie.setVisible(visible)
+                            self.firstZombie.setVisible(1)
                         flagDoMestre = False
                     elif (self.secondZombie == None and self.matouSecond == False and hasattr(self, "secondZombie")):
                         if(self.firstZombie != None):
@@ -797,8 +783,7 @@ class Board:
                         if(hasattr(self, "secondZombie") and flagDoMestre == False):
                                 self.secondZombie = Zombie(encontrouAlgoX,encontrouAlgoY, "B")
                                 spkr.speak("Achei Zombie")
-                                visible = self.secondZombie.getVisible() + 1
-                                self.secondZombie.setVisible(visible)
+                                self.secondZombie.setVisible(1)
                         flagDoMestre = False
 
                 if(self.robot.robotColorDetected()=="Red"):
@@ -957,10 +942,12 @@ class Board:
                 or (self.robot.getY() - 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX()) 
                 or (self.robot.getY() + 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX())):
                     spkr.speak("Ataquei")
-                    self.firstZombie.setStunned(4)
+                    self.firstZombie.setStunned(1)
                     if (self.firstZombie.getPecas() == 1):
                         self.firstZombie.setPecas(0)
                         self.robot.setPecas(1)
+                        self.robot.mexerBraco(90)
+                        self.temPeca = True
         if(hasattr(self,"secondZombie")):
             if(self.secondZombie != None):
                 if ((self.robot.getX() - 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
@@ -968,37 +955,46 @@ class Board:
                 or (self.robot.getY() - 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX()) 
                 or (self.robot.getY() + 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX())):
                     spkr.speak("Ataquei") # som para efetuar ataque com a mao
-                    self.secondZombie.setStunned(4)
+                    self.secondZombie.setStunned(1)
                     if (self.secondZombie.getPecas() == 1):
                             self.secondZombie.setPecas(0)
                             self.robot.setPecas(1)
+                            self.robot.mexerBraco(90)
+                            self.temPeca = True
             
     def efetuarPistola(self):
-        if ((self.robot.getX() - 1 == self.firstZombie.getX() and self.robot.getY() == self.firstZombie.getY()) 
-        or (self.robot.getX() + 1 == self.firstZombie.getX() and self.robot.getY() == self.firstZombie.getY()) 
-        or (self.robot.getY() - 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX()) 
-        or (self.robot.getY() + 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX())):
-            if (self.robot.getBalas() == 1):
-                spkr.speak("Bang") # som para efetuar ataque com a pistola
-                if (self.firstZombie.getPecas() == 1):
-                    newPecas = self.robot.getPecas() + 1
-                    self.robot.setPecas(newPecas)
-                self.matouFirst = True
-                self.firstZombie = None
-                self.robot.setBalas(0)
-
-        elif ((self.robot.getX() - 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
-        or (self.robot.getX() + 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
-        or (self.robot.getY() - 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX()) 
-        or (self.robot.getY() + 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX())):
-            if (self.robot.getBalas() == 1):    
-                spkr.speak("Bang") # som para efetuar ataque com a pistola
-                if (self.secondZombie.getPecas() == 1):
-                    newPecas = self.robot.getPecas() + 1
-                    self.robot.setPecas(newPecas)
-                self.matouSecond = True
-                self.secondZombie = None
-                self.robot.setBalas(0)
+        if(hasattr(self, "firstZombie")):
+            if(self.firstZombie != None):
+                if ((self.robot.getX() - 1 == self.firstZombie.getX() and self.robot.getY() == self.firstZombie.getY()) 
+                or (self.robot.getX() + 1 == self.firstZombie.getX() and self.robot.getY() == self.firstZombie.getY()) 
+                or (self.robot.getY() - 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX()) 
+                or (self.robot.getY() + 1 == self.firstZombie.getY() and self.robot.getX() == self.firstZombie.getX())):
+                    if (self.robot.getBalas() == 1):
+                        spkr.speak("Bang") # som para efetuar ataque com a pistola
+                        if (self.firstZombie.getPecas() == 1):
+                            newPecas = self.robot.getPecas() + 1
+                            self.robot.setPecas(newPecas)
+                            self.robot.mexerBraco(90)
+                            self.temPeca = True
+                        self.matouFirst = True
+                        self.firstZombie = None
+                        self.robot.setBalas(0)
+        if(hasattr(self,"secondZombie")):
+            if(self.secondZombie != None):
+                if ((self.robot.getX() - 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
+                or (self.robot.getX() + 1 == self.secondZombie.getX() and self.robot.getY() == self.secondZombie.getY()) 
+                or (self.robot.getY() - 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX()) 
+                or (self.robot.getY() + 1 == self.secondZombie.getY() and self.robot.getX() == self.secondZombie.getX())):
+                    if (self.robot.getBalas() == 1):    
+                        spkr.speak("Bang") # som para efetuar ataque com a pistola
+                        if (self.secondZombie.getPecas() == 1):
+                            newPecas = self.robot.getPecas() + 1
+                            self.robot.setPecas(newPecas)
+                            self.robot.mexerBraco(90)
+                            self.temPeca = True
+                        self.matouSecond = True
+                        self.secondZombie = None
+                        self.robot.setBalas(0)
 
 
 
