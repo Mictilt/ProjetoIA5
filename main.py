@@ -628,7 +628,6 @@ def JogarInteligente():
                     destinyY=board.municao.getY(),
                     )
                     print("Municao: "+ str(robotController.getBalas()))
-                    break
             if(board.pecaA != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -636,7 +635,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                break
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -644,7 +642,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                break
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLadoFirst() == True):
@@ -673,7 +670,6 @@ def JogarInteligente():
                     destinyY=board.municao.getY(),
                     )
                     print("Municao: "+ str(robotController.getBalas()))
-                    break
             if(board.pecaA != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -681,7 +677,6 @@ def JogarInteligente():
                 destinyX=board.pecaA.getX(),
                 destinyY=board.pecaA.getY()
                 )
-                break
             if(board.pecaB != None):
                 sigarCaminho(nturno,
                 robotX=robotController.getX(),
@@ -689,7 +684,6 @@ def JogarInteligente():
                 destinyX=board.pecaB.getX(),
                 destinyY=board.pecaB.getY()
                 )
-                break
             board.detetouAlgo3()
             if (hasattr(board, "firstZombie")):
                 if(board.firstZombie != None and board.aoLadoFirst() == True):
@@ -715,7 +709,6 @@ def MenuJogar():
     while(optJogar):
 
         movimentosDisponiveis = 2
-        
 
         if (robotController.getPecas() == 1):
             while(movimentosDisponiveis > 0):
