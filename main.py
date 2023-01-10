@@ -76,9 +76,12 @@ def sigarCaminho(nturno,robotX, robotY, destinyX, destinyY):
                         board.efetuarPistola()
                     else:
                         board.efetuarAtaque()
+                print("antes do sigar")
                 if(board.aoLado2DireitaFirst() == False and board.aoLado2DireitaSec() == False):
                     robotController.andarDireita()
+                    print("dentro do sigar")
                 nturno += 1
+                print("depois do sigar")
                 board.atualizarTurno(nturno)
     while (robotX > destinyX):
         board.detetouAlgo3()
